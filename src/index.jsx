@@ -8,8 +8,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>
-);
-
-const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+   </React.StrictMode>  
+); 
 
