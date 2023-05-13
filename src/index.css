@@ -73,11 +73,8 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 .hidden {
-  /* display: none; */
-  visibility: hidden;
-}
-.part-inpot {
-  margin-bottom: -2rem;
+  display: none;
+  /* visibility: hidden; */
 }
 .part-inpot:first-child {
   margin-top: 2rem;
@@ -96,7 +93,7 @@ input,
   text-align: center;
   width: 30rem;
 }
-.sub{
+.sub {
   margin-top: 2rem;
 }
 input:focus,
@@ -108,10 +105,20 @@ input:focus,
 .note {
   margin: 0.2rem auto 0;
   padding: 1rem;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: 500;
   background-color: #000720;
   color: #38a1d1;
   border-radius: 2rem;
   width: 30rem;
+}
+.link {
+  text-decoration: underline;
+  font-weight: 900;
+}
+.link:hover {
+  color: #000720;
+}
+.p-link{
+  margin: 1.3rem 0;
 }
