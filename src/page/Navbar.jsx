@@ -17,7 +17,7 @@ export default function Navbar() {
         </li>
         <li className="item-menu">
           <Link className="item" to="/signup">
-            Sing Up
+            Sign Up
           </Link>
         </li>
         <li className="item-menu">
