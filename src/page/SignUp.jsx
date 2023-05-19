@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWS_REGEXG = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const NUM_REGEXG = /^(\d{4})[ ]?(\d{3})[ ]?(\d{4})$/;
 
 export default function SignUp() {
   const nameRef = useRef();
   const errRef = useRef();
 
   const [names, setname] = useState({ user: "", valid: false, focus: false });
+  const [num, setnum] = useState({ user: "", valid: false, focus: false });
   const [pas, setpas] = useState({ user: "", valid: false, focus: false });
   const [pas22, setpas22] = useState({ user: "", valid: false, focus: false });
-  const [errMsg, setErrMsg] = useState("");
+  const [msg, setMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -25,6 +29,13 @@ export default function SignUp() {
   }, [names.user]);
 
   useEffect(() => {
+    const result = NUM_REGEXG.test(num.user);
+    setnum((pev) => {
+      return { ...pev, valid: result };
+    });
+  }, [num.user]);
+
+  useEffect(() => {
     const result2 = PWS_REGEXG.test(pas.user);
     setpas((pev) => {
       return { ...pev, valid: result2 };
@@ -37,14 +48,54 @@ export default function SignUp() {
     }
   }, [pas.user, pas22.user]);
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [names.user, pas.user, pas22.user]);
-
   const landleSub = async (e) => {
     e.preventDefault();
-    setSuccess(true);
-    console.log(success);
+    if (!names.valid || !pas.valid || pas22.valid || num.valid) {
+      setMsg("اصلاعات وارد شده صحیح نمی باشند");
+      return;
+    }
+    try {
+      let num1 = parseInt(num.user);
+      const response = await axios.post(
+        "http://185.213.167.156:8080/v1/service/ali/user/save",
+        JSON.stringify({
+          username: names.user,
+          password: pas.user,
+          cellphone: num1,
+        }),
+        {
+          headers: {
+            "Api-Key":
+              "f2165063fdd61d4de33c389f5ea9aaa110097e2903c6b1b723cabe593886eebb",
+          },
+        }
+      );
+      console.log(response);
+      const stamsg = response?.data?.resultMessage;
+      const stacode = response?.data?.resultCode;
+
+      if (stacode === 1) {
+        setSuccess(true);
+        setMsg(stamsg);
+      }
+
+      setname((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
+      setpas((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
+      setMsg(stamsg);
+    } catch (error) {
+      const stamsg = error?.message;
+      setMsg(stamsg);
+      setname((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
+      setpas((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
+    }
   };
 
   return (
@@ -52,7 +103,7 @@ export default function SignUp() {
       <main className="main signUp">
         {success ? (
           <section>
-            <h1>Account created</h1>
+            <h1>{msg}</h1>
             <br />
             <p>
               go to{" "}
@@ -63,8 +114,8 @@ export default function SignUp() {
           </section>
         ) : (
           <section>
-            <p ref={errRef} className={errMsg ? "errMsg" : "hidden"}>
-              Error:{errMsg}
+            <p ref={errRef} className={msg ? "msg" : "hidden"}>
+              Error:{msg}
             </p>
             <h1>Sign Up</h1>
             <form onSubmit={landleSub}>
@@ -103,6 +154,43 @@ export default function SignUp() {
                 <p className={`note ${names.focus ? ` none ` : ` hidden `} `}>
                   4 to 24 characters. Must begin with a letter. Letters,
                   numbers, underscores, hyphens allowed.
+                </p>
+              </div>
+              <br />
+              <div className="part-inpot">
+                <label className="label-inpout" htmlFor="number">
+                  number:{" "}
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="number"
+                  id="number"
+                  value={num.user}
+                  autoComplete="off"
+                  required
+                  onChange={(e) =>
+                    setnum((pev) => {
+                      return { ...pev, user: e.target.value };
+                    })
+                  }
+                  onFocus={(e) =>
+                    setnum((pev) => {
+                      return { ...pev, focus: true };
+                    })
+                  }
+                  onBlur={(e) =>
+                    setnum((pev) => {
+                      return { ...pev, focus: false };
+                    })
+                  }
+                  className={`ss ${num.valid ? " green" : " none"}${
+                    num.valid || !num.user ? " none" : " red"
+                  }`}
+                />
+                <p className={`note ${num.focus ? ` none ` : ` hidden `} `}>
+                  The phone number must be 10 characters long and contain only
+                  the numbers 0 to 9
                 </p>
               </div>
               <br />
@@ -183,7 +271,7 @@ export default function SignUp() {
               <br />
               <button className="sub">sign up</button>
               <br />
-              <p className="p-link">Need an Account?</p>
+              <p className="p-link">Need an Login?</p>
               <Link className="link" to="/login">
                 Login
               </Link>

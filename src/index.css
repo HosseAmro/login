@@ -122,3 +122,11 @@ input:focus,
 .p-link{
   margin: 1.3rem 0;
 }
+.msg{
+  background-color: red;
+  color: black;
+  border-radius: 2rem;
+  padding: 1rem;
+  margin: .5rem 0;
+  font-weight: 900;
+}
