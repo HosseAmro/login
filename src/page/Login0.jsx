@@ -94,18 +94,23 @@ export default function login() {
       });
     }
   };
+  const classMain =
+    "bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]";
+  const classMsg = "font-black my-2 p-4 rounded-larger text-dark bg-red-600";
+  const classBut =
+    "w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl ";
 
   return (
     <>
-      <main className="main">
+      <main className={classMain}>
         <section>
-          <p ref={errRef} className={msg ? "msg" : "hidden"}>
+          <p ref={errRef} className={msg ? classMsg : "hidden"}>
             {msg}
           </p>
           <h1>Login</h1>
           <form onSubmit={landleSub}>
-            <div className="part-inpot">
-              <label className="label-inpout" htmlFor="username">
+            <div className=" mt-8">
+              <label className="p-2 inline-block" htmlFor="username">
                 username:{" "}
               </label>
               <br />
@@ -132,14 +137,14 @@ export default function login() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`ss ${names.valid ? " green" : " none"}${
-                  names.valid || !names.user ? " none" : " red"
-                }`}
+                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                  names.valid ? " green" : " none"
+                }${names.valid || !names.user ? " none" : " red"}`}
               />
             </div>
             <br />
-            <div className="part-inpot">
-              <label className="label-inpout" htmlFor="pwd">
+            <div>
+              <label className="p-2 inline-block" htmlFor="pwd">
                 password:{" "}
               </label>
               <br />
@@ -165,21 +170,26 @@ export default function login() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`ss ${pas.valid ? " green" : " none"}${
-                  pas.valid || !pas.user ? " none" : " red"
-                }`}
+                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                  pas.valid ? " green" : " none"
+                }${pas.valid || !pas.user ? " none" : " red"}`}
               />
             </div>
             <br />
-            <button className="sub">sign up</button>
+            <button
+              className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white ${classBut}`}
+            >
+              login
+            </button>
             <br />
-            <p className="p-link">Need an Account?</p>
-            <Link className="link" to="/signup">
+            <p className="my-5">Need an Account?</p>
+            <Link className="hover:text-dark font-black" to="/signup">
               Sign Up
             </Link>
           </form>
         </section>
-        <button onClick={refresh} className="sub">
+        <button onClick={refresh}  className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0 bg-white  mt-8 ${classBut}`}
+             >
           refresh
         </button>
       </main>

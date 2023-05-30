@@ -7,17 +7,16 @@
 *,
 *::before,
 *::after {
-  /* background-color: rgba(0, 17, 255, 0.15); */
   color: rgb(255, 255, 255);
   padding: 0px;
   margin: 0px;
   border: none;
   outline: none;
-  /* overflow: hidden; */
   text-decoration: none;
   box-sizing: border-box;
   list-style: none;
   direction: ltr;
+  font-size: 20px;
   font-family: "Montserrat", sans-serif;
 }
 html {
@@ -30,7 +29,17 @@ html {
 body {
   background-color: #000720;
 }
-.navbar {
+.red {
+  border: 3.5px solid red;
+}
+.green {
+  border: 3.5px solid green;
+}
+.none {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* .navbar {
   min-width: 38rem;
   max-width: 75%;
   margin: 3.5rem auto 0;
@@ -44,8 +53,8 @@ body {
   padding: 2.3rem;
   font-size: 1.7rem;
   gap: 1rem;
-}
-.item {
+} */
+/* .item {
   display: block;
   padding: 0.6rem 1rem;
   border-radius: 1.5rem;
@@ -54,40 +63,24 @@ body {
 .item:hover {
   background-color: #000720;
   color: #38a1d1;
-}
-.main {
+} */
+/* .main {
   background-color: #38a1d1;
   text-align: center;
   font-size: 2rem;
   border-radius: 1.5rem;
   margin: 3rem auto 0;
+  padding: 2rem;
   min-width: 38rem;
   max-width: 75%;
   max-height: 62rem;
   aspect-ratio: 1/1.3;
-  padding: 2rem;
-}
-.red {
-  border: 3.5px solid red;
-}
-.green {
-  border: 3.5px solid green;
-}
-.none {
-  font-family: "Montserrat", sans-serif;
-}
-.hidden {
-  display: none;
-  /* visibility: hidden; */
-}
-.part-inpot:first-child {
-  margin-top: 2rem;
-}
-.label-inpout {
+} */
+/* .label-inpout {
   display: inline-block;
   padding: 0.5rem;
-}
-input,
+} */
+/* input,
 .sub {
   padding: 1rem;
   color: #000720;
@@ -96,17 +89,17 @@ input,
   border-radius: 2rem;
   text-align: center;
   width: 30rem;
-}
-.sub {
+} */
+/* .sub {
   margin-top: 2rem;
-}
-input:focus,
+} */
+/* input:focus,
 .sub:focus,
 .sub:hover {
   background-color: #000720;
   color: #38a1d1;
-}
-.note {
+} */
+/* .note {
   margin: 0.2rem auto 0;
   padding: 1rem;
   font-size: 1.4rem;
@@ -115,22 +108,21 @@ input:focus,
   color: #38a1d1;
   border-radius: 2rem;
   width: 30rem;
-}
-.link {
-  text-decoration: underline;
+} */
+/* .link {
   font-weight: 900;
-}
-.link:hover {
+} */
+/* .link:hover {
   color: #000720;
-}
-.p-link {
+} */
+/* .p-link {
   margin: 1.3rem 0;
-}
-.msg {
+} */
+/* .msg {
   background-color: red;
   color: black;
   border-radius: 2rem;
   padding: 1rem;
   margin: 0.5rem 0;
   font-weight: 900;
-}
+} */

@@ -100,7 +100,7 @@ export default function SignUp() {
         localStorage.setItem("Authtoken", Auth.token);
         localStorage.setItem("Authpas", Auth.pas);
         localStorage.setItem("Authnumber", Auth.number);
-        
+
         navigate(from, { required: true });
       }, 1000);
     } catch (error) {
@@ -114,18 +114,24 @@ export default function SignUp() {
       });
     }
   };
-
+  const classMsg = "font-black my-2 p-4 rounded-larger text-dark bg-red-600";
+  const classNote =
+    "mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30";
+  const classBut =
+    "w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl ";
+    const classMain =
+    "bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]";
   return (
     <>
-      <main className="main signUp">
+      <main className={classMain}>
         <section>
-          <p ref={errRef} className={msg ? "msg" : "hidden"}>
+          <p ref={errRef} className={msg ? classMsg : " hidden"}>
             Error:{msg}
           </p>
           <h1>Sign Up</h1>
           <form onSubmit={landleSub}>
-            <div className="part-inpot">
-              <label className="label-inpout" htmlFor="username">
+            <div className=" mt-8">
+              <label className="p-2 inline-block" htmlFor="username">
                 username:{" "}
               </label>
               <br />
@@ -152,18 +158,18 @@ export default function SignUp() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`ss ${names.valid ? " green" : " none"}${
-                  names.valid || !names.user ? " none" : " red"
-                }`}
+                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                  names.valid ? " green" : " none"
+                }${names.valid || !names.user ? " none" : " red"}`}
               />
-              <p className={`note ${names.focus ? ` none ` : ` hidden `} `}>
+              <p className={` ${names.focus ? classNote : ` hidden `} `}>
                 4 to 24 characters. Must begin with a letter. Letters, numbers,
                 underscores, hyphens allowed.
               </p>
             </div>
             <br />
-            <div className="part-inpot">
-              <label className="label-inpout" htmlFor="number">
+            <div >
+              <label className="p-2 inline-block" htmlFor="number">
                 number:{" "}
               </label>
               <br />
@@ -189,18 +195,18 @@ export default function SignUp() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`ss ${num.valid ? " green" : " none"}${
-                  num.valid || !num.user ? " none" : " red"
-                }`}
+                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                  num.valid ? " green" : " none"
+                }${num.valid || !num.user ? " none" : " red"}`}
               />
-              <p className={`note ${num.focus ? ` none ` : ` hidden `} `}>
+              <p className={` ${num.focus ? classNote : ` hidden `} `}>
                 The phone number must be 10 characters long and contain only the
                 numbers 0 to 9
               </p>
             </div>
             <br />
-            <div className="part-inpot">
-              <label className="label-inpout" htmlFor="pwd">
+            <div >
+              <label className="p-2 inline-block" htmlFor="pwd">
                 password:{" "}
               </label>
               <br />
@@ -226,11 +232,11 @@ export default function SignUp() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`ss ${pas.valid ? " green" : " none"}${
-                  pas.valid || !pas.user ? " none" : " red"
-                }`}
+                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                  pas.valid ? " green" : " none"
+                }${pas.valid || !pas.user ? " none" : " red"}`}
               />
-              <p className={`note ${pas.focus ? ` none ` : ` hidden `} `}>
+              <p className={` ${pas.focus ? classNote : ` hidden `} `}>
                 8 to 24 characters. <br />
                 Must include uppercase and lowercase letters, a number and a
                 special character. <br />
@@ -238,8 +244,8 @@ export default function SignUp() {
               </p>
             </div>
             <br />
-            <div className="part-inpot">
-              <label className="label-inpout" htmlFor="mach-pws">
+            <div >
+              <label className="p-2 inline-block" htmlFor="mach-pws">
                 confirm:{" "}
               </label>
               <br />
@@ -265,19 +271,23 @@ export default function SignUp() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${pas22.valid ? " green" : " none"}${
-                  pas22.valid || !pas22.user ? " none" : " red"
-                }`}
+                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                  pas22.valid ? " green" : " none"
+                }${pas22.valid || !pas22.user ? " none" : " red"}`}
               />
-              <p className={`note ${pas22.focus ? ` none ` : ` hidden `} `}>
+              <p className={` ${pas22.focus ? classNote : ` hidden `} `}>
                 Must match the first password input field.
               </p>
             </div>
             <br />
-            <button className="sub">sign up</button>
+            <button
+              className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white  ${classBut}`}
+              >
+              sign up
+            </button>
             <br />
-            <p className="p-link">Need an Login?</p>
-            <Link className="link" to="/login">
+            <p className="my-5">Need an Login?</p>
+            <Link className="hover:text-dark font-black " to="/login">
               Login
             </Link>
           </form>
