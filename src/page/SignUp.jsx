@@ -1,26 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import useAuth from "../hooks/useAuth";
 
-const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PWS_REGEXG = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const NUM_REGEXG = /^(\d{4})[ ]?(\d{3})[ ]?(\d{4})$/;
+const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
+const PWS_REGEXG = /^.{4,24}$/;
+const NUM_REGEXG = /^[0-9]{11,13}$/;
 
 export default function SignUp() {
-  const { setAuth } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
   const nameRef = useRef();
   const errRef = useRef();
-
   const [names, setname] = useState({ user: "", valid: false, focus: false });
   const [num, setnum] = useState({ user: "", valid: false, focus: false });
   const [pas, setpas] = useState({ user: "", valid: false, focus: false });
   const [pas22, setpas22] = useState({ user: "", valid: false, focus: false });
-
   const [msg, setMsg] = useState("");
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     nameRef.current.focus();
@@ -76,17 +73,14 @@ export default function SignUp() {
         }
       );
 
-      const AuthData = JSON.parse(response.config.data);
-      const token = response.data.info.token;
-      setAuth({
-        user: AuthData.username,
-        pas: AuthData.password,
-        number: AuthData.cellphone,
-        token: token,
-      });
+      const AuthData = await JSON.parse(response.config.data);
+      const token = await response.data.info.token;
+      const stamsg = await response?.data?.resultMessage;
 
-      const stamsg = response?.data?.resultMessage;
-      const stacode = response?.data?.resultCode;
+      localStorage.setItem("username", AuthData.username);
+      localStorage.setItem("password", AuthData.password);
+      localStorage.setItem("number", AuthData.number);
+      localStorage.setItem("token", token);
 
       setname((pev) => {
         return { user: "", valid: false, focus: false };
@@ -94,13 +88,14 @@ export default function SignUp() {
       setpas((pev) => {
         return { user: "", valid: false, focus: false };
       });
+      setnum((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
+      setpas22((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
       setMsg(stamsg);
       setTimeout(() => {
-        localStorage.setItem("Authuser", Auth.user);
-        localStorage.setItem("Authtoken", Auth.token);
-        localStorage.setItem("Authpas", Auth.pas);
-        localStorage.setItem("Authnumber", Auth.number);
-
         navigate(from, { required: true });
       }, 1000);
     } catch (error) {
@@ -112,6 +107,12 @@ export default function SignUp() {
       setpas((pev) => {
         return { user: "", valid: false, focus: false };
       });
+      setnum((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
+      setpas22((pev) => {
+        return { user: "", valid: false, focus: false };
+      });
     }
   };
   const classMsg = "font-black my-2 p-4 rounded-larger text-dark bg-red-600";
@@ -119,7 +120,7 @@ export default function SignUp() {
     "mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30";
   const classBut =
     "w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl ";
-    const classMain =
+  const classMain =
     "bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]";
   return (
     <>
@@ -168,7 +169,7 @@ export default function SignUp() {
               </p>
             </div>
             <br />
-            <div >
+            <div>
               <label className="p-2 inline-block" htmlFor="number">
                 number:{" "}
               </label>
@@ -205,7 +206,7 @@ export default function SignUp() {
               </p>
             </div>
             <br />
-            <div >
+            <div>
               <label className="p-2 inline-block" htmlFor="pwd">
                 password:{" "}
               </label>
@@ -244,7 +245,7 @@ export default function SignUp() {
               </p>
             </div>
             <br />
-            <div >
+            <div>
               <label className="p-2 inline-block" htmlFor="mach-pws">
                 confirm:{" "}
               </label>
@@ -282,7 +283,7 @@ export default function SignUp() {
             <br />
             <button
               className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white  ${classBut}`}
-              >
+            >
               sign up
             </button>
             <br />
