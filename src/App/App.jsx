@@ -1,5 +1,3 @@
-import React from "react";
-
 import Navbar from "../page/Navbar";
 import Home from "../page/Home";
 import Profile from "../page/Profile";

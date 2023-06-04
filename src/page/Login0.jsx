@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
 const PWS_REGEXG = /^.{4,24}$/;
 
-export default function login() {
+export default function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/profile";
@@ -62,10 +62,10 @@ export default function login() {
       localStorage.setItem("password", AuthData.password);
       localStorage.setItem("token", token);
 
-      setname((pev) => {
+      setname(() => {
         return { user: "", valid: false, focus: false };
       });
-      setpas((pev) => {
+      setpas(() => {
         return { user: "", valid: false, focus: false };
       });
 
@@ -77,10 +77,10 @@ export default function login() {
     } catch (error) {
       const stamsg = error?.message;
       setMsg(stamsg);
-      setname((pev) => {
+      setname(() => {
         return { user: "", valid: false, focus: false };
       });
-      setpas((pev) => {
+      setpas(() => {
         return { user: "", valid: false, focus: false };
       });
     }
@@ -118,12 +118,12 @@ export default function login() {
                     return { ...pev, user: e.target.value };
                   })
                 }
-                onFocus={(e) =>
+                onFocus={() =>
                   setname((pev) => {
                     return { ...pev, focus: true };
                   })
                 }
-                onBlur={(e) =>
+                onBlur={() =>
                   setname((pev) => {
                     return { ...pev, focus: false };
                   })
@@ -151,12 +151,12 @@ export default function login() {
                     return { ...pev, user: e.target.value };
                   })
                 }
-                onFocus={(e) =>
+                onFocus={() =>
                   setpas((pev) => {
                     return { ...pev, focus: true };
                   })
                 }
-                onBlur={(e) =>
+                onBlur={() =>
                   setpas((pev) => {
                     return { ...pev, focus: false };
                   })

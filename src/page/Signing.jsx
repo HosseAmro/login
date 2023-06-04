@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -82,16 +82,16 @@ export default function Signing() {
       localStorage.setItem("number", AuthData.number);
       localStorage.setItem("token", token);
 
-      setname((pev) => {
+      setname(() => {
         return { user: "", valid: false, focus: false };
       });
-      setpas((pev) => {
+      setpas(() => {
         return { user: "", valid: false, focus: false };
       });
-      setnum((pev) => {
+      setnum(() => {
         return { user: "", valid: false, focus: false };
       });
-      setpas22((pev) => {
+      setpas22(() => {
         return { user: "", valid: false, focus: false };
       });
       setMsg(stamsg);
@@ -101,16 +101,16 @@ export default function Signing() {
     } catch (error) {
       const stamsg = error?.message;
       setMsg(stamsg);
-      setname((pev) => {
+      setname(() => {
         return { user: "", valid: false, focus: false };
       });
-      setpas((pev) => {
+      setpas(() => {
         return { user: "", valid: false, focus: false };
       });
-      setnum((pev) => {
+      setnum(() => {
         return { user: "", valid: false, focus: false };
       });
-      setpas22((pev) => {
+      setpas22(() => {
         return { user: "", valid: false, focus: false };
       });
     }
@@ -149,12 +149,12 @@ export default function Signing() {
                     return { ...pev, user: e.target.value };
                   })
                 }
-                onFocus={(e) =>
+                onFocus={() =>
                   setname((pev) => {
                     return { ...pev, focus: true };
                   })
                 }
-                onBlur={(e) =>
+                onBlur={() =>
                   setname((pev) => {
                     return { ...pev, focus: false };
                   })
@@ -186,12 +186,12 @@ export default function Signing() {
                     return { ...pev, user: e.target.value };
                   })
                 }
-                onFocus={(e) =>
+                onFocus={() =>
                   setnum((pev) => {
                     return { ...pev, focus: true };
                   })
                 }
-                onBlur={(e) =>
+                onBlur={() =>
                   setnum((pev) => {
                     return { ...pev, focus: false };
                   })
@@ -223,12 +223,12 @@ export default function Signing() {
                     return { ...pev, user: e.target.value };
                   })
                 }
-                onFocus={(e) =>
+                onFocus={() =>
                   setpas((pev) => {
                     return { ...pev, focus: true };
                   })
                 }
-                onBlur={(e) =>
+                onBlur={() =>
                   setpas((pev) => {
                     return { ...pev, focus: false };
                   })
@@ -262,12 +262,12 @@ export default function Signing() {
                     return { ...pev, user: e.target.value };
                   })
                 }
-                onFocus={(e) =>
+                onFocus={() =>
                   setpas22((pev) => {
                     return { ...pev, focus: true };
                   })
                 }
-                onBlur={(e) =>
+                onBlur={() =>
                   setpas22((pev) => {
                     return { ...pev, focus: false };
                   })

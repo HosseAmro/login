@@ -1,4 +1,3 @@
-import React from "react";
 import authApi from "../api/authApi";
 import { useNavigate } from "react-router-dom";
 export default function Profile() {
@@ -8,7 +7,7 @@ export default function Profile() {
   const classMain =
     "bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]";
 
-  const send = async (e) => {
+  const send = async function() {
     const response = await authApi.post(
       "/login",
       JSON.stringify({
@@ -18,7 +17,7 @@ export default function Profile() {
     );
     console.log(response);
   };
-  const exsit = async (e) => {
+  const exsit = async () => {
     localStorage.clear();
     setTimeout(() => {
       navigate("/profile", { required: true });
