@@ -6,10 +6,10 @@ const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
 const PWS_REGEXG = /^.{4,24}$/;
 const NUM_REGEXG = /^[0-9]{11,13}$/;
 
-export default function SignUp() {
+export default function Signing() {
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/profile";
 
   const nameRef = useRef();
   const errRef = useRef();
@@ -284,7 +284,7 @@ export default function SignUp() {
             <button
               className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white  ${classBut}`}
             >
-              sign up
+              Signing
             </button>
             <br />
             <p className="my-5">Need an Login?</p>

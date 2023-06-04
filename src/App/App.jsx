@@ -3,9 +3,10 @@ import React from "react";
 import Navbar from "../page/Navbar";
 import Home from "../page/Home";
 import Profile from "../page/Profile";
-import SignUp from "../page/SignUp";
+import Signing from "../page/Signing";
 import Login0 from "../page/Login0";
-import NeedAuth from "../hooks/NeedAuth";
+import Need from "../hooks/Need";
+import Exist from "../hooks/Exist";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,11 +15,13 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route element={<NeedAuth />}>
+        <Route element={<Need />}>
           <Route path="/profile" element={<Profile />} />
         </Route>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login0 />} />
+        <Route element={<Exist />}>
+          <Route path="/Signing" element={<Signing />} />
+          <Route path="/login" element={<Login0 />} />
+        </Route>
       </Routes>
     </>
   );

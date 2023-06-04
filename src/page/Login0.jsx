@@ -8,7 +8,7 @@ const PWS_REGEXG = /^.{4,24}$/;
 export default function login() {
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/profile";
 
   const nameRef = useRef();
   const errRef = useRef();
@@ -174,8 +174,8 @@ export default function login() {
             </button>
             <br />
             <p className="my-5">Need an Account?</p>
-            <Link className="hover:text-dark font-black" to="/signup">
-              Sign Up
+            <Link className="hover:text-dark font-black" to="/Signing">
+              Signing
             </Link>
           </form>
         </section>
