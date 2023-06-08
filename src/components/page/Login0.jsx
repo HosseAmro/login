@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
 const PWS_REGEXG = /^.{4,24}$/;
 
@@ -54,12 +53,11 @@ export default function Login() {
           },
         }
       );
-      const AuthData = await JSON.parse(response.config.data);
+      const info = await response?.data.info;
       const token = await response.data.info.token;
       const stamsg = await response?.data?.resultMessage;
 
-      localStorage.setItem("username", AuthData.username);
-      localStorage.setItem("password", AuthData.password);
+      localStorage.setItem("info", info);
       localStorage.setItem("token", token);
 
       setname(() => {
@@ -85,17 +83,19 @@ export default function Login() {
       });
     }
   };
-  const classMain =
-    "bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]";
-  const classMsg = "font-black my-2 p-4 rounded-larger text-dark bg-red-600";
-  const classBut =
-    "w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl ";
 
   return (
     <>
-      <main className={classMain}>
+      <main className="bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]">
         <section>
-          <p ref={errRef} className={msg ? classMsg : "hidden"}>
+          <p
+            ref={errRef}
+            className={
+              msg
+                ? "font-black my-2 p-4 rounded-larger text-dark bg-red-600"
+                : "hidden"
+            }
+          >
             {msg}
           </p>
           <h1>Login</h1>
@@ -128,7 +128,7 @@ export default function Login() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
                   names.valid ? " green" : " none"
                 }${names.valid || !names.user ? " none" : " red"}`}
               />
@@ -161,14 +161,14 @@ export default function Login() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
                   pas.valid ? " green" : " none"
                 }${pas.valid || !pas.user ? " none" : " red"}`}
               />
             </div>
             <br />
             <button
-              className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white ${classBut}`}
+              className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl`}
             >
               login
             </button>

@@ -73,13 +73,11 @@ export default function Signing() {
         }
       );
 
-      const AuthData = await JSON.parse(response.config.data);
+      const info = await response?.data.info;
       const token = await response.data.info.token;
       const stamsg = await response?.data?.resultMessage;
 
-      localStorage.setItem("username", AuthData.username);
-      localStorage.setItem("password", AuthData.password);
-      localStorage.setItem("number", AuthData.number);
+      localStorage.setItem("info", info);
       localStorage.setItem("token", token);
 
       setname(() => {
@@ -115,21 +113,22 @@ export default function Signing() {
       });
     }
   };
-  const classMsg = "font-black my-2 p-4 rounded-larger text-dark bg-red-600";
-  const classNote =
-    "mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30";
-  const classBut =
-    "w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl ";
-  const classMain =
-    "bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]";
+
   return (
     <>
-      <main className={classMain}>
+      <main className="bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]">
         <section>
-          <p ref={errRef} className={msg ? classMsg : " hidden"}>
+          <p
+            ref={errRef}
+            className={
+              msg
+                ? "font-black my-2 p-4 rounded-larger text-dark bg-red-600"
+                : " hidden"
+            }
+          >
             Error:{msg}
           </p>
-          <h1>Sign Up</h1>
+          <h1>Signing</h1>
           <form onSubmit={landleSub}>
             <div className=" mt-8">
               <label className="p-2 inline-block" htmlFor="username">
@@ -159,11 +158,17 @@ export default function Signing() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                className={` focus:bg-dark focus:text-blue0 ${
                   names.valid ? " green" : " none"
                 }${names.valid || !names.user ? " none" : " red"}`}
               />
-              <p className={` ${names.focus ? classNote : ` hidden `} `}>
+              <p
+                className={` ${
+                  names.focus
+                    ? `mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30`
+                    : ` hidden `
+                } `}
+              >
                 4 to 24 characters. Must begin with a letter. Letters, numbers,
                 underscores, hyphens allowed.
               </p>
@@ -196,11 +201,17 @@ export default function Signing() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
                   num.valid ? " green" : " none"
                 }${num.valid || !num.user ? " none" : " red"}`}
               />
-              <p className={` ${num.focus ? classNote : ` hidden `} `}>
+              <p
+                className={` ${
+                  num.focus
+                    ? `mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30`
+                    : ` hidden `
+                } `}
+              >
                 The phone number must be 10 characters long and contain only the
                 numbers 0 to 9
               </p>
@@ -233,11 +244,17 @@ export default function Signing() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
                   pas.valid ? " green" : " none"
                 }${pas.valid || !pas.user ? " none" : " red"}`}
               />
-              <p className={` ${pas.focus ? classNote : ` hidden `} `}>
+              <p
+                className={` ${
+                  pas.focus
+                    ? `mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30`
+                    : ` hidden `
+                } `}
+              >
                 8 to 24 characters. <br />
                 Must include uppercase and lowercase letters, a number and a
                 special character. <br />
@@ -272,17 +289,23 @@ export default function Signing() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={`${classBut} focus:bg-dark focus:text-blue0 ${
+                className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
                   pas22.valid ? " green" : " none"
                 }${pas22.valid || !pas22.user ? " none" : " red"}`}
               />
-              <p className={` ${pas22.focus ? classNote : ` hidden `} `}>
+              <p
+                className={` ${
+                  pas22.focus
+                    ? `mt-1 mx-auto  p-4 text-2xl font-medium text-blue0 bg-dark rounded-larger w-30`
+                    : ` hidden `
+                } `}
+              >
                 Must match the first password input field.
               </p>
             </div>
             <br />
             <button
-              className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white  ${classBut}`}
+              className={`focus:bg-dark focus:text-blue0 hover:bg-dark hover:text-blue0  mt-8 bg-white  w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl`}
             >
               Signing
             </button>

@@ -1,8 +1,8 @@
-import Navbar from "../page/Navbar";
-import Home from "../page/Home";
-import Profile from "../page/Profile";
-import Signing from "../page/Signing";
-import Login0 from "../page/Login0";
+import Navbar from "../components/page/Navbar";
+import Home from "../components/page/Home";
+import Profile from "../components/page/Profile";
+import Signing from "../components/page/Signing";
+import Login0 from "../components/page/Login0";
 import Need from "../hooks/Need";
 import Exist from "../hooks/Exist";
 import { Routes, Route } from "react-router-dom";
