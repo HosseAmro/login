@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 
 const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
@@ -7,6 +8,7 @@ const PWS_REGEXG = /^.{4,24}$/;
 const NUM_REGEXG = /^[0-9]{11,13}$/;
 
 export default function Signing() {
+  const { setAuth } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/profile";
@@ -52,7 +54,7 @@ export default function Signing() {
 
   const landleSub = async (e) => {
     e.preventDefault();
-    if (!names.valid || !pas.valid || pas22.valid || num.valid) {
+    if (!names.valid || !pas.valid || !pas22.valid || !num.valid) {
       setMsg("اصلاعات وارد شده صحیح نمی باشند");
       return;
     }
@@ -72,13 +74,20 @@ export default function Signing() {
           },
         }
       );
-
-      const info = await response?.data.info;
+      const info = await response?.data?.info;
       const token = await response.data.info.token;
       const stamsg = await response?.data?.resultMessage;
+      const AuthData = await JSON.parse(response?.config?.data);
 
       localStorage.setItem("info", info);
       localStorage.setItem("token", token);
+
+      setAuth({
+        username: AuthData.username,
+        password: AuthData.password,
+        cellphone: AuthData.cellphone,
+        token: token,
+      });
 
       setname(() => {
         return { user: "", valid: false, focus: false };
@@ -158,7 +167,7 @@ export default function Signing() {
                     return { ...pev, focus: false };
                   })
                 }
-                className={` focus:bg-dark focus:text-blue0 ${
+                className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
                   names.valid ? " green" : " none"
                 }${names.valid || !names.user ? " none" : " red"}`}
               />

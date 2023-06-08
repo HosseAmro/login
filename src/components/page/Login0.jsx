@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
 const PWS_REGEXG = /^.{4,24}$/;
 
 export default function Login() {
+  const { setAuth } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/profile";
@@ -53,13 +55,19 @@ export default function Login() {
           },
         }
       );
-      const info = await response?.data.info;
-      const token = await response.data.info.token;
+      const info = await response?.data?.info;
+      const token = await response?.data?.info?.token;
       const stamsg = await response?.data?.resultMessage;
+      const AuthData = await JSON.parse(response?.config?.data);
 
       localStorage.setItem("info", info);
       localStorage.setItem("token", token);
 
+      await setAuth({
+        username: AuthData.username,
+        password: AuthData.password,
+        token: token,
+      });
       setname(() => {
         return { user: "", valid: false, focus: false };
       });
