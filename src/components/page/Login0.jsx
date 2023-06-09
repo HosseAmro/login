@@ -54,7 +54,7 @@ export default function Login() {
 
       await setAuth({
         username: AuthData.username,
-        password: AuthData.pas,
+        password: AuthData.password,
         token: token,
       });
       setname(() => {
