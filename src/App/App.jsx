@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/page/Navbar";
 import Home from "../components/page/Home";
 import Profile from "../components/page/Profile";
-import Signing from "../components/page/Signing";
+import Signin from "../components/page/Signin";
 import Login0 from "../components/page/Login0";
 import Need from "../hooks/Need";
 import Exist from "../hooks/Exist";
@@ -30,7 +30,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route element={<Exist />}>
-          <Route path="/Signing" element={<Signing />} />
+          <Route path="/Signin" element={<Signin />} />
           <Route path="/login" element={<Login0 />} />
         </Route>
       </Routes>

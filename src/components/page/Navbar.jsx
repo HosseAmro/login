@@ -24,20 +24,13 @@ export default function Navbar() {
           </li>
         ) : (
           <>
-            <li>
-              <Link
-                className=" hover:text-blue0 hover:bg-dark text-dark rounded-3xl block px-4 py-2"
-                to="/Signing"
-              >
-                Sign Up
-              </Link>
-            </li>
+           
             <li>
               <Link
                 className=" hover:text-blue0 hover:bg-dark text-dark rounded-3xl block px-4 py-2"
                 to="/login"
               >
-                Login
+                Register
               </Link>
             </li>
           </>
