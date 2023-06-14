@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { store } from "../App/store";
 
 const initialState = {
   names: {
@@ -19,30 +18,30 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     test0: (state, action) => {
-      const slect = store[action.payload];
-      const result = slect.regexp.test(slect.user);
-      slect.valid = result;
-      
+      const result = state[action.payload].regexp.test(
+        state[action.payload].user
+      );
+      state[action.payload].valid = result;
     },
     focus: (state, action) => {
-      const slect = store[action.payload];
-      slect.focus = !slect.focus;
-      
+      state[action.payload].focus = !state[action.payload].focus;
     },
-  },
-  change: {
-    reducer: (state, action) => {
-      const slect = store[action.payload];
-      slect.user = action.payload.value;
-      
+    change: {
+      reducer: (state, action) => {
+        state[action.payload.names].user = action.payload.value;
+      },
+      prepare: (names, value) => {
+        return {
+          payload: {
+            names,
+            value,
+          },
+        };
+      },
     },
-    prepare: (names, value) => {
-      return {
-        payload: {
-          names,
-          value,
-        },
-      };
+    clear: (state) => {
+      // eslint-disable-next-line no-unused-vars
+      state = initialState;
     },
   },
 });

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import Inpot from "../Inpot/Inpot";
-import Button from "../Button/Button";
-import Send from "../../services/send";
-
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/authSlice";
+import Send from "../../services/send";
+import Inpot from "../Inpot/Inpot";
+import Button from "../Button/Button";
+
+
+import useAuth from "../../hooks/useAuth";
 
 export default function Login() {
   const { setAuth } = useAuth();
@@ -20,13 +21,12 @@ export default function Login() {
   const auth = useSelector((store) => store.auth);
   const names = useSelector((store) => store.auth.names.user);
   const pas = useSelector((store) => store.auth.pas.user);
-  useEffect(() => {
-    dispatch(actions.test0("names"));
-  }, [names]);
 
   useEffect(() => {
+    dispatch(actions.test0("names"));
     dispatch(actions.test0("pas"));
-  }, [pas]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [names, pas]);
 
   const landleSub = async (e) => {
     e.preventDefault();
@@ -53,27 +53,16 @@ export default function Login() {
         password: AuthData.password,
         token: token,
       });
-      // setname(() => {
-      //   return { user: "", valid: false, focus: false };
-      // });
-      // setpas(() => {
-      //   return { user: "", valid: false, focus: false };
-      // });
 
+      dispatch(actions.clear());
       setMsg(stamsg);
-
       setTimeout(() => {
         navigate(from, { required: true });
       }, 1000);
     } catch (error) {
       const stamsg = error?.message;
       setMsg(stamsg);
-      // setname(() => {
-      //   return { user: "", valid: false, focus: false };
-      // });
-      // setpas(() => {
-      //   return { user: "", valid: false, focus: false };
-      // });
+      dispatch(actions.clear());
     }
   };
 
@@ -91,17 +80,9 @@ export default function Login() {
             {msg}
           </p>
           <form onSubmit={landleSub}>
-            <Inpot
-              nameInpot="username"
-              type="text"
-              storeName="names"
-            />
+            <Inpot nameInpot="username" type="text" storeName="names" />
             <br />
-            <Inpot
-              nameInpot="password"
-              type="password"
-              storeName="pas"
-            />
+            <Inpot nameInpot="password" type="password" storeName="pas" />
             <br />
             <Button nameButton="Login" />
             <br />
