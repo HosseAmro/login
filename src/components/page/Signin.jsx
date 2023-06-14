@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Inpot from "../Inpot/Inpot";
@@ -19,7 +19,6 @@ export default function Signin() {
   const [pas, setpas] = useState({ user: "", valid: false, focus: false });
   const [pas22, setpas22] = useState({ user: "", valid: false, focus: false });
   const [msg, setMsg] = useState("");
-  const errRef = useRef();
 
   useEffect(() => {
     const result = NAME_REGEXG.test(names.user);
@@ -118,7 +117,6 @@ export default function Signin() {
       <main className="bg-blue0 text-center rounded-3xl font-4xl mt-12 mx-auto p-8 min-w-[38rem] max-w-[75%] max-h-[62rem] aspect-[3/4]">
         <section>
           <p
-            ref={errRef}
             className={
               msg
                 ? "font-black my-2 p-4 rounded-larger text-dark bg-red-600"

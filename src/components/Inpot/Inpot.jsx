@@ -1,4 +1,10 @@
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../features/authSlice";
+
 export default function Inpot(p) {
+  const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
+  const slect = auth[p.storeName];
   return (
     <>
       <div>
@@ -10,27 +16,17 @@ export default function Inpot(p) {
           type={p.type}
           name={p.nameInpot}
           id={p.nameInpot}
-          value={p.State.user}
+          value={slect.user}
           autoComplete="off"
           required
-          onChange={(e) =>
-            p.setState((pev) => {
-              return { ...pev, user: e.target.value };
-            })
-          }
-          onFocus={() =>
-            p.setState((pev) => {
-              return { ...pev, focus: true };
-            })
-          }
-          onBlur={() =>
-            p.setState((pev) => {
-              return { ...pev, focus: false };
-            })
-          }
+          onChange={(e) => {
+            dispatch(actions.change(p.storeName, e.target.value));
+          }}
+          onFocus={() => dispatch(actions.focus(p.storeName))}
+          onBlur={() => dispatch(actions.focus(p.storeName))}
           className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
-            p.State.valid ? " green" : " none"
-          }${p.State.valid || !p.State.user ? " none" : " red"}`}
+            slect.valid ? " green" : " none"
+          }${slect.valid || !slect.user ? " none" : " red"}`}
         />
       </div>
     </>
