@@ -1,19 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../features/authSlice";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { Auth, setAuth } = useAuth();
-  const username = Auth?.username;
-  const password = Auth?.password;
-  const number = Auth?.cellphone;
+
+  const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
 
   const exsit = async () => {
     localStorage.clear();
-    setAuth({});
-    // console.log("profile old:", Auth);
+    dispatch(actions.clear());
     setTimeout(() => {
-      navigate("/profile", { required: true });
+      navigate("/login", { required: true });
     }, 1000);
   };
 
@@ -23,21 +22,21 @@ export default function Profile() {
         <p className="py-4 text-blue-700 font-mono">
           Name:
           <span className=" font-mono font-bold text-blue-950">
-            {username}
+            {auth.names.user}
             {/* {username} */}
           </span>
         </p>
         <p className="py-4 text-blue-700 font-mono">
           Password:
           <span className=" font-mono font-bold text-blue-950">
-            {password}
+            {auth.pas.user}
             {/* {password} */}
           </span>
         </p>
         <p className="py-4 text-blue-700 font-mono">
           Phone Number:
           <span className=" font-mono font-bold text-blue-950">
-            {number}
+            {auth.num.user}
           </span>
         </p>
       </div>

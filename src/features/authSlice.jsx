@@ -5,12 +5,13 @@ const initialState = {
     user: "",
     valid: false,
     focus: false,
-    regexp: /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/,
+    REG: /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/,
   },
-  num: { user: "", valid: false, focus: false, regexp: /^[0-9]{11,13}$/ },
-  pas: { user: "", valid: false, focus: false, regexp: /^.{4,24}$/ },
+  num: { user: "", valid: false, focus: false, REG: /^[0-9]{11,13}$/ },
+  pas: { user: "", valid: false, focus: false, REG: /^.{4,24}$/ },
   pas22: { user: "", valid: false, focus: false },
   msg: "",
+  token: "",
 };
 
 export const authSlice = createSlice({
@@ -18,13 +19,24 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     test0: (state, action) => {
-      const result = state[action.payload].regexp.test(
-        state[action.payload].user
-      );
+      const result = state[action.payload].REG.test(state[action.payload].user);
       state[action.payload].valid = result;
+    },
+    test1: (state) => {
+      const result = state.pas.REG.test(state.pas.user);
+      const match = state.pas.user === state.pas22.user;
+      if (result) {
+        state.pas22.valid = match;
+      }
     },
     focus: (state, action) => {
       state[action.payload].focus = !state[action.payload].focus;
+    },
+    msg: (state, action) => {
+      state.msg = action.payload;
+    },
+    token: (state, action) => {
+      state.token = action.payload;
     },
     change: {
       reducer: (state, action) => {
@@ -40,8 +52,43 @@ export const authSlice = createSlice({
       },
     },
     clear: (state) => {
-      // eslint-disable-next-line no-unused-vars
-      state = initialState;
+      (state.names = {
+        user: "",
+        valid: false,
+        focus: false,
+        REG: /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/,
+      }),
+        (state.num = {
+          user: "",
+          valid: false,
+          focus: false,
+          REG: /^[0-9]{11,13}$/,
+        }),
+        (state.pas = {
+          user: "",
+          valid: false,
+          focus: false,
+          REG: /^.{4,24}$/,
+        }),
+        (state.pas22 = { user: "", valid: false, focus: false }),
+        (state.msg = ""),
+        (state.token = "");
+    },
+    authset: {
+      reducer: (state, action) => {
+        state.names.user = action.payload.names;
+        state.pas.user = action.payload.pas;
+        state.token = action.payload.token;
+      },
+      prepare: (token, names, pas) => {
+        return {
+          payload: {
+            token,
+            names,
+            pas,
+          },
+        };
+      },
     },
   },
 });

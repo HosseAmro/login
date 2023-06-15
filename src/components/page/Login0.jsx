@@ -1,37 +1,28 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/authSlice";
-import Send from "../../services/send";
+import { useEffect } from "react";
 import Inpot from "../Inpot/Inpot";
 import Button from "../Button/Button";
-
-
-import useAuth from "../../hooks/useAuth";
+import Send from "../../services/send";
 
 export default function Login() {
-  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/profile";
-
-  const [msg, setMsg] = useState("");
-
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
-  const names = useSelector((store) => store.auth.names.user);
-  const pas = useSelector((store) => store.auth.pas.user);
+  const from = location.state?.from?.pathname || "/profile";
 
   useEffect(() => {
     dispatch(actions.test0("names"));
     dispatch(actions.test0("pas"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [names, pas]);
+  }, [auth.names.user, auth.pas.user]);
 
   const landleSub = async (e) => {
     e.preventDefault();
     if (!auth.names.valid || !auth.pas.valid) {
-      setMsg("اصلاعات وارد شده صحیح نمی باشند");
+      dispatch(actions.msg("اصلاعات وارد شده صحیح نمی باشند"));
       return;
     }
     try {
@@ -48,20 +39,15 @@ export default function Login() {
       localStorage.setItem("info", info);
       localStorage.setItem("token", token);
 
-      await setAuth({
-        username: AuthData.username,
-        password: AuthData.password,
-        token: token,
-      });
-
+      dispatch(actions.msg(stamsg));
       dispatch(actions.clear());
-      setMsg(stamsg);
+      dispatch(actions.authset(token, AuthData.username, AuthData.password));
       setTimeout(() => {
         navigate(from, { required: true });
       }, 1000);
     } catch (error) {
       const stamsg = error?.message;
-      setMsg(stamsg);
+      dispatch(actions.msg(stamsg));
       dispatch(actions.clear());
     }
   };
@@ -72,12 +58,12 @@ export default function Login() {
         <section>
           <p
             className={
-              msg
+              auth.msg
                 ? "font-black my-2 p-4 rounded-larger text-dark bg-red-600"
                 : "hidden"
             }
           >
-            {msg}
+            {auth.msg}
           </p>
           <form onSubmit={landleSub}>
             <Inpot nameInpot="username" type="text" storeName="names" />

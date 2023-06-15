@@ -1,5 +1,8 @@
-import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { actions } from "../features/authSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
 import Navbar from "../components/page/Navbar";
 import Home from "../components/page/Home";
 import Profile from "../components/page/Profile";
@@ -7,18 +10,13 @@ import Signin from "../components/page/Signin";
 import Login0 from "../components/page/Login0";
 import Need from "../hooks/Need";
 import Exist from "../hooks/Exist";
-import useAuth from "../hooks/useAuth";
 
 function App() {
-  const { Auth, setAuth } = useAuth();
   const token = localStorage.getItem("token");
-  const info = localStorage.getItem("info");
-  console.log("App new:", Auth);
+  const dispatch = useDispatch();
   useEffect(() => {
-    setAuth({
-      token: token,
-      info: info,
-    });
+    dispatch(actions.token(token));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

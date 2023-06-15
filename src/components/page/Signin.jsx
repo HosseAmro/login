@@ -1,65 +1,48 @@
-import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../features/authSlice";
+import { useEffect } from "react";
 import Inpot from "../Inpot/Inpot";
 import Button from "../Button/Button";
 import Send from "../../services/send";
 
-const NAME_REGEXG = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
-const PWS_REGEXG = /^.{4,24}$/;
-const NUM_REGEXG = /^[0-9]{11,13}$/;
-
 export default function Signin() {
-  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
   const from = location.state?.from?.pathname || "/profile";
-  const [names, setname] = useState({ user: "", valid: false, focus: false });
-  const [num, setnum] = useState({ user: "", valid: false, focus: false });
-  const [pas, setpas] = useState({ user: "", valid: false, focus: false });
-  const [pas22, setpas22] = useState({ user: "", valid: false, focus: false });
-  const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    const result = NAME_REGEXG.test(names.user);
-    setname((pev) => {
-      return { ...pev, valid: result };
-    });
-  }, [names.user]);
+    dispatch(actions.test0("names"));
+    dispatch(actions.test0("num"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.names.user, auth.num.user]);
 
   useEffect(() => {
-    const result = NUM_REGEXG.test(num.user);
-    setnum((pev) => {
-      return { ...pev, valid: result };
-    });
-  }, [num.user]);
-
-  useEffect(() => {
-    const result = PWS_REGEXG.test(pas.user);
-    setpas((pev) => {
-      return { ...pev, valid: result };
-    });
-    const match = pas.user === pas22.user;
-    if (result) {
-      setpas22((pev) => {
-        return { ...pev, valid: match };
-      });
-    }
-  }, [pas.user, pas22.user]);
+    dispatch(actions.test0("pas"));
+    dispatch(actions.test1());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.pas.user, auth.pas22.user]);
 
   const landleSub = async (e) => {
     e.preventDefault();
-    if (!names.valid || !pas.valid || !pas22.valid || !num.valid) {
-      setMsg("اصلاعات وارد شده صحیح نمی باشند");
+    if (
+      !auth.names.valid ||
+      !auth.pas.valid ||
+      !auth.pas22.valid ||
+      !auth.num.valid
+    ) {
+      dispatch(actions.msg("اصلاعات وارد شده صحیح نمی باشند"));
       return;
     }
     try {
-      let num1 = parseInt(num.user);
+      let num1 = parseInt(auth.num.user);
       console.log(num1);
       const response = await Send({
         type: "/save",
-        names: names.user,
-        pas: pas.user,
+        names: auth.names.user,
+        pas: auth.pas.user,
         num1: num1,
       });
       console.log(response);
@@ -70,45 +53,17 @@ export default function Signin() {
 
       localStorage.setItem("info", info);
       localStorage.setItem("token", token);
-
-      setAuth({
-        username: AuthData.username,
-        password: AuthData.password,
-        cellphone: AuthData.cellphone,
-        token: token,
-      });
-
-      setname(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setpas(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setnum(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setpas22(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setMsg(stamsg);
+      
+      dispatch(actions.msg(stamsg));
+      dispatch(actions.clear());
+      dispatch(actions.authset(token, AuthData.username, AuthData.password));
       setTimeout(() => {
         navigate(from, { required: true });
       }, 1000);
     } catch (error) {
       const stamsg = error?.message;
-      setMsg(stamsg);
-      setname(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setpas(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setnum(() => {
-        return { user: "", valid: false, focus: false };
-      });
-      setpas22(() => {
-        return { user: "", valid: false, focus: false };
-      });
+      dispatch(actions.msg(stamsg));
+      dispatch(actions.clear());
     }
   };
 
@@ -118,41 +73,21 @@ export default function Signin() {
         <section>
           <p
             className={
-              msg
+              auth.msg
                 ? "font-black my-2 p-4 rounded-larger text-dark bg-red-600"
                 : " hidden"
             }
           >
-            Error:{msg}
+            Error:{auth.msg}
           </p>
           <form onSubmit={landleSub}>
-            <Inpot
-              nameInpot="username"
-              type="text"
-              State={names}
-              setState={setname}
-            />
+            <Inpot nameInpot="username" type="text" storeName="names" />
             <br />
-            <Inpot
-              nameInpot="number"
-              type="text"
-              State={num}
-              setState={setnum}
-            />
+            <Inpot nameInpot="number" type="text" storeName="num" />
             <br />
-            <Inpot
-              nameInpot="password"
-              type="password"
-              State={pas}
-              setState={setpas}
-            />
+            <Inpot nameInpot="password" type="password" storeName="pas" />
             <br />
-            <Inpot
-              nameInpot="Confirm password"
-              type="password"
-              State={pas22}
-              setState={setpas22}
-            />
+            <Inpot nameInpot="confirm" type="password" storeName="pas22" />
             <br />
             <Button nameButton="Signin" />
             <br />
