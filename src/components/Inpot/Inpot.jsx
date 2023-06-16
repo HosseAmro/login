@@ -1,9 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/authSlice";
+import { useEffect } from "react";
 
 export default function Inpot(p) {
   const dispatch = useDispatch();
-  const auth = useSelector((store) => store.auth);
+  const pasUser = useSelector((store) => store.auth.pas.user);
+  const user = useSelector((store) => store.auth[p.storeName].user);
+  const valid = useSelector((store) => store.auth[p.storeName].valid);
+
+  let reg = undefined;
+  if (p.storeName === "pas") {
+    reg = /^.{4,24}$/;
+  } else if (p.storeName === "pas22") {
+    reg = /^.{4,24}$/;
+  } else if (p.storeName === "num") {
+    reg = /^[0-9]{11,13}$/;
+  } else {
+    reg = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/;
+  }
+
+  useEffect(() => {
+    if (p.storeName === "pas22") {
+      const reslut = reg.test(pasUser);
+      const mach = pasUser === user;
+      if (!mach) return;
+      dispatch(actions.valid(p.storeName, reslut));
+      return;
+    }
+    const reslut = reg.test(user);
+    dispatch(actions.valid(p.storeName, reslut));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   return (
     <>
       <div>
@@ -15,7 +42,7 @@ export default function Inpot(p) {
           type={p.type}
           name={p.nameInpot}
           id={p.nameInpot}
-          value={auth[p.storeName].user}
+          value={user}
           autoComplete="off"
           required
           onChange={(e) =>
@@ -24,12 +51,8 @@ export default function Inpot(p) {
           onFocus={() => dispatch(actions.focus(p.storeName))}
           onBlur={() => dispatch(actions.focus(p.storeName))}
           className={`w-30 p-4 text-dark rounded-larger font-medium text-center text-4xl focus:bg-dark focus:text-blue0 ${
-            auth[p.storeName].valid ? " green" : " none"
-          }${
-            auth[p.storeName].valid || !auth[p.storeName].user
-              ? " none"
-              : " red"
-          }`}
+            valid ? " green" : " none"
+          }${valid || !user ? " none" : " red"}`}
         />
       </div>
     </>

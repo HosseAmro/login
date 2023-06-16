@@ -5,10 +5,9 @@ const initialState = {
     user: "",
     valid: false,
     focus: false,
-    REG: /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/,
   },
-  num: { user: "", valid: false, focus: false, REG: /^[0-9]{11,13}$/ },
-  pas: { user: "", valid: false, focus: false, REG: /^.{4,24}$/ },
+  num: { user: "", valid: false, focus: false },
+  pas: { user: "", valid: false, focus: false },
   pas22: { user: "", valid: false, focus: false },
   msg: "",
   token: "",
@@ -18,16 +17,18 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    test0: (state, action) => {
-      const result = state[action.payload].REG.test(state[action.payload].user);
-      state[action.payload].valid = result;
-    },
-    test1: (state) => {
-      const result = state.pas.REG.test(state.pas.user);
-      const match = state.pas.user === state.pas22.user;
-      if (result) {
-        state.pas22.valid = match;
-      }
+    valid: {
+      reducer: (state, action) => {
+        state[action.payload.names].valid = action.payload.reslut;
+      },
+      prepare: (names, reslut) => {
+        return {
+          payload: {
+            names,
+            reslut,
+          },
+        };
+      },
     },
     focus: (state, action) => {
       state[action.payload].focus = !state[action.payload].focus;

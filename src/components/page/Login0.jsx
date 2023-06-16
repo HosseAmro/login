@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/authSlice";
-import { useEffect } from "react";
+
 import Inpot from "../Inpot/Inpot";
 import Button from "../Button/Button";
 import Send from "../../services/send";
@@ -12,12 +12,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
   const from = location.state?.from?.pathname || "/profile";
-
-  useEffect(() => {
-    dispatch(actions.test0("names"));
-    dispatch(actions.test0("pas"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.names.user, auth.pas.user]);
 
   const landleSub = async (e) => {
     e.preventDefault();
@@ -82,3 +76,4 @@ export default function Login() {
     </>
   );
 }
+ 

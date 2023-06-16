@@ -1,10 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/authSlice";
-import { useEffect } from "react";
+
 import Inpot from "../Inpot/Inpot";
 import Button from "../Button/Button";
 import Send from "../../services/send";
+
+
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -12,18 +14,6 @@ export default function Signin() {
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
   const from = location.state?.from?.pathname || "/profile";
-
-  useEffect(() => {
-    dispatch(actions.test0("names"));
-    dispatch(actions.test0("num"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.names.user, auth.num.user]);
-
-  useEffect(() => {
-    dispatch(actions.test0("pas"));
-    dispatch(actions.test1());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.pas.user, auth.pas22.user]);
 
   const landleSub = async (e) => {
     e.preventDefault();
@@ -53,7 +43,7 @@ export default function Signin() {
 
       localStorage.setItem("info", info);
       localStorage.setItem("token", token);
-      
+
       dispatch(actions.msg(stamsg));
       dispatch(actions.clear());
       dispatch(actions.authset(token, AuthData.username, AuthData.password));
